@@ -22,11 +22,13 @@
 #include "arcadatype.h"
 
 class Adafruit_Arcada : public Adafruit_Arcada_SPITFT {
-public:
-  Adafruit_Arcada(void) { _has_accel = true; };
+ public:
+  Adafruit_Arcada(void) {
+    _has_accel = true;
+  };
   Adafruit_LSM6DS33 lsm6ds33 = Adafruit_LSM6DS33();
   Adafruit_LSM6DS3TRC lsm6ds3trc = Adafruit_LSM6DS3TRC();
-  Adafruit_Sensor *accel;
+  Adafruit_Sensor* accel;
 
   bool variantBegin(void) {
     pinMode(5, INPUT_PULLUP);
@@ -48,7 +50,7 @@ public:
   }
 
   void displayBegin(void) {
-    Adafruit_ST7789 *tft = new Adafruit_ST7789(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
+    Adafruit_ST7789* tft = new Adafruit_ST7789(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
                                                ARCADA_TFT_DC, ARCADA_TFT_RST);
     tft->init(240, 240);
     tft->setRotation(ARCADA_TFT_ROTATION);
@@ -71,7 +73,7 @@ public:
     return buttons;
   }
 
-private:
+ private:
 };
 
 #endif

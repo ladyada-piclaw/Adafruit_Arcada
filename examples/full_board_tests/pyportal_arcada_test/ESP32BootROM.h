@@ -22,30 +22,30 @@
 #include <Arduino.h>
 
 class ESP32BootROMClass {
-public:
-  ESP32BootROMClass(HardwareSerial &hwSerial, int gpio0Pin, int resetnPin);
+ public:
+  ESP32BootROMClass(HardwareSerial& hwSerial, int gpio0Pin, int resetnPin);
 
   int begin(unsigned long baudrate);
   void end();
 
   int beginFlash(uint32_t offset, uint32_t size, uint32_t chunkSize);
-  int dataFlash(const void *data, uint32_t length);
+  int dataFlash(const void* data, uint32_t length);
   int endFlash(uint32_t reboot);
 
-  int md5Flash(uint32_t offset, uint32_t size, uint8_t *result);
+  int md5Flash(uint32_t offset, uint32_t size, uint8_t* result);
 
-private:
+ private:
   int sync();
   int changeBaudrate(unsigned long baudrate);
   int spiAttach();
 
-  void command(int opcode, const void *data, uint16_t length);
-  int response(int opcode, unsigned long timeout, void *body = NULL);
+  void command(int opcode, const void* data, uint16_t length);
+  int response(int opcode, unsigned long timeout, void* body = NULL);
 
-  void writeEscapedBytes(const uint8_t *data, uint16_t length);
+  void writeEscapedBytes(const uint8_t* data, uint16_t length);
 
-private:
-  HardwareSerial *_serial;
+ private:
+  HardwareSerial* _serial;
   int _gpio0Pin;
   int _resetnPin;
 

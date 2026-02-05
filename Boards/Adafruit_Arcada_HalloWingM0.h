@@ -31,10 +31,12 @@
 #include "arcadatype.h"
 
 class Adafruit_Arcada : public Adafruit_Arcada_SPITFT {
-public:
-  Adafruit_LIS3DH *accel = NULL;
+ public:
+  Adafruit_LIS3DH* accel = NULL;
 
-  Adafruit_Arcada(void) { _has_accel = true; };
+  Adafruit_Arcada(void) {
+    _has_accel = true;
+  };
 
   bool variantBegin(void) {
     accel = new Adafruit_LIS3DH();
@@ -50,7 +52,7 @@ public:
   }
 
   void displayBegin(void) {
-    Adafruit_ST7735 *tft = new Adafruit_ST7735(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
+    Adafruit_ST7735* tft = new Adafruit_ST7735(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
                                                ARCADA_TFT_DC, ARCADA_TFT_RST);
     tft->initR(INITR_144GREENTAB);
     tft->setRotation(ARCADA_TFT_ROTATION);
@@ -75,7 +77,7 @@ public:
     return buttons;
   }
 
-private:
+ private:
   Adafruit_FreeTouch qt_1 =
       Adafruit_FreeTouch(A2, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
   Adafruit_FreeTouch qt_2 =

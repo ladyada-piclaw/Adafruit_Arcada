@@ -20,8 +20,8 @@
     @return  One of the ImageReturnCode values (IMAGE_SUCCESS on successful
              completion, other values on failure).
 */
-ImageReturnCode Adafruit_Arcada_SPITFT::drawBMP(char *filename, int16_t x,
-                                                int16_t y, Adafruit_SPITFT *tft,
+ImageReturnCode Adafruit_Arcada_SPITFT::drawBMP(char* filename, int16_t x,
+                                                int16_t y, Adafruit_SPITFT* tft,
                                                 boolean transact) {
   if (!tft) {
     tft = display;
@@ -40,7 +40,7 @@ ImageReturnCode Adafruit_Arcada_SPITFT::drawBMP(char *filename, int16_t x,
     @return  The activated ImageReader, or NULL if neither SD or QSPI
     are available
 */
-Adafruit_ImageReader *Adafruit_Arcada_SPITFT::getImageReader(void) {
+Adafruit_ImageReader* Adafruit_Arcada_SPITFT::getImageReader(void) {
   if (SD_imagereader) {
     return SD_imagereader;
   } else if (QSPI_imagereader) {
