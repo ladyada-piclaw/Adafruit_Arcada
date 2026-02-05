@@ -206,7 +206,9 @@ bool Adafruit_Arcada_SPITFT::setBacklight(uint8_t brightness, bool saveToDisk) {
     @returns  brightness From 0 (off) to 255 (full on)
 */
 /**************************************************************************/
-uint8_t Adafruit_Arcada_SPITFT::getBacklight(void) { return _brightness; }
+uint8_t Adafruit_Arcada_SPITFT::getBacklight(void) {
+  return _brightness;
+}
 
 /**************************************************************************/
 /*!
@@ -234,7 +236,9 @@ bool Adafruit_Arcada_SPITFT::setVolume(uint8_t volume, bool saveToDisk) {
     @returns  Volume From 0 (off) to 255 (full on)
 */
 /**************************************************************************/
-uint8_t Adafruit_Arcada_SPITFT::getVolume(void) { return _volume; }
+uint8_t Adafruit_Arcada_SPITFT::getVolume(void) {
+  return _volume;
+}
 
 /**************************************************************************/
 /*!
@@ -373,7 +377,7 @@ void Adafruit_Arcada_SPITFT::timerStop(void) {
     @param format The printf-compatible format and extra args
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::printf(const char *format, ...) {
+void Adafruit_Arcada_SPITFT::printf(const char* format, ...) {
   va_list args;
   va_start(args, format);
 
@@ -390,7 +394,6 @@ void Adafruit_Arcada_SPITFT::printf(const char *format, ...) {
 */
 /**************************************************************************/
 int16_t Adafruit_Arcada_SPITFT::readJoystickX(uint8_t sampling) {
-
   float reading = 0;
   if (_joystick_x >= 0) {
     for (int i = 0; i < sampling; i++) {
@@ -412,7 +415,6 @@ int16_t Adafruit_Arcada_SPITFT::readJoystickX(uint8_t sampling) {
 */
 /**************************************************************************/
 int16_t Adafruit_Arcada_SPITFT::readJoystickY(uint8_t sampling) {
-
   float reading = 0;
   if (_joystick_y >= 0) {
     for (int i = 0; i < sampling; i++) {
@@ -661,7 +663,7 @@ bool Adafruit_Arcada_SPITFT::createFrameBuffer(uint16_t width,
 /**************************************************************************/
 bool Adafruit_Arcada_SPITFT::blitFrameBuffer(uint16_t x, uint16_t y,
                                              bool blocking, bool bigEndian,
-                                             Adafruit_SPITFT *blitdisplay) {
+                                             Adafruit_SPITFT* blitdisplay) {
   if (!blitdisplay) {
     blitdisplay = display;
   }
@@ -689,7 +691,9 @@ bool Adafruit_Arcada_SPITFT::blitFrameBuffer(uint16_t x, uint16_t y,
     @returns True if it does
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::hasTouchscreen(void) { return (_touch_xp >= 0); }
+bool Adafruit_Arcada_SPITFT::hasTouchscreen(void) {
+  return (_touch_xp >= 0);
+}
 
 /**************************************************************************/
 /*!

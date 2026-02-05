@@ -13,8 +13,7 @@
     @return True if a the file was found and was parsable
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::loadConfigurationFile(const char *filename) {
-
+bool Adafruit_Arcada_SPITFT::loadConfigurationFile(const char* filename) {
 #ifdef ARCADA_USE_JSON
   // Open file for reading
   File file = open(filename);
@@ -50,8 +49,7 @@ bool Adafruit_Arcada_SPITFT::loadConfigurationFile(const char *filename) {
 */
 /**************************************************************************/
 // Saves the configuration to a file
-bool Adafruit_Arcada_SPITFT::saveConfigurationFile(const char *filename) {
-
+bool Adafruit_Arcada_SPITFT::saveConfigurationFile(const char* filename) {
 #ifdef ARCADA_USE_JSON
   configJSON["volume"] = _volume;
   configJSON["brightness"] = _brightness;

@@ -1,8 +1,8 @@
 #include <Adafruit_Arcada.h>
 #include <Adafruit_Arcada_Filesystem.h>
 
-static bool filenameValidityChecker(const char *filename,
-                                    const char *extension);
+static bool filenameValidityChecker(const char* filename,
+                                    const char* extension);
 
 #if defined(ARCADA_SD_SPI_PORT)
 #if defined(ENABLE_EXTENDED_TRANSFER_CLASS)
@@ -40,8 +40,8 @@ FatFileSystem Arcada_QSPI_FileSys;
    or ARCADA_FILESYS_SD_AND_QSPI (both found)
 */
 /**************************************************************************/
-Arcada_FilesystemType
-Adafruit_Arcada_SPITFT::filesysBegin(Arcada_FilesystemType desiredFilesys) {
+Arcada_FilesystemType Adafruit_Arcada_SPITFT::filesysBegin(
+    Arcada_FilesystemType desiredFilesys) {
   if (_filesys_type != ARCADA_FILESYS_NONE) {
     return _filesys_type;
   }
@@ -74,8 +74,9 @@ Adafruit_Arcada_SPITFT::filesysBegin(Arcada_FilesystemType desiredFilesys) {
       // to make sure the filesystem was mounted.
       if (!Arcada_QSPI_FileSys.begin(&Arcada_QSPI_Flash)) {
         Serial.println("Failed to mount filesystem!");
-        Serial.println("Was CircuitPython loaded on the board first to create "
-                       "the filesystem?");
+        Serial.println(
+            "Was CircuitPython loaded on the board first to create "
+            "the filesystem?");
         return _filesys_type;
       }
       if (_filesys_type == ARCADA_FILESYS_SD) {
@@ -99,7 +100,7 @@ Adafruit_Arcada_SPITFT::filesysBegin(Arcada_FilesystemType desiredFilesys) {
     @return True if was able to find a directory at that path
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::chdir(const char *path) {
+bool Adafruit_Arcada_SPITFT::chdir(const char* path) {
   Serial.printf("\tArcadaFileSys : chdir '%s'\n", path);
 
   if (strlen(path) >= sizeof(_cwd_path)) { // too long!
@@ -141,8 +142,8 @@ bool Adafruit_Arcada_SPITFT::chdir(const char *path) {
     @return -1 if was not able to open, or the number of files
 */
 /**************************************************************************/
-int16_t Adafruit_Arcada_SPITFT::filesysListFiles(const char *path,
-                                                 const char *extensionFilter) {
+int16_t Adafruit_Arcada_SPITFT::filesysListFiles(const char* path,
+                                                 const char* extensionFilter) {
   if (!path) { // use CWD!
     path = _cwd_path;
   }
@@ -196,7 +197,7 @@ int16_t Adafruit_Arcada_SPITFT::filesysListFiles(const char *path,
     @return true or false if we can open the file
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::exists(const char *path) {
+bool Adafruit_Arcada_SPITFT::exists(const char* path) {
   Serial.printf("\tArcadaFileSys : Exists? '%s'\n", path);
   File f = open(path);
   if (!f)
@@ -212,7 +213,7 @@ bool Adafruit_Arcada_SPITFT::exists(const char *path) {
     @return true or false if we succeeded
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::mkdir(const char *path) {
+bool Adafruit_Arcada_SPITFT::mkdir(const char* path) {
   Serial.printf("\tArcadaFileSys : Mkdir '%s'\n", path);
 
   bool ret = false;
@@ -235,7 +236,7 @@ bool Adafruit_Arcada_SPITFT::mkdir(const char *path) {
     @return true or false if we succeeded
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::remove(const char *path) {
+bool Adafruit_Arcada_SPITFT::remove(const char* path) {
   Serial.printf("\tArcadaFileSys : Removing '%s'\n", path);
 
   bool ret = false;
@@ -260,8 +261,8 @@ bool Adafruit_Arcada_SPITFT::remove(const char *path) {
     @return A File object, for whatever filesystem we're using
 */
 /**************************************************************************/
-File Adafruit_Arcada_SPITFT::open(const char *path, uint32_t flags) {
-  const char *the_path;
+File Adafruit_Arcada_SPITFT::open(const char* path, uint32_t flags) {
+  const char* the_path;
 
   if (!path) { // Just the CWD then
     Serial.printf("\tArcadaFileSys : open no path '%s'\n", _cwd_path);
@@ -309,9 +310,9 @@ File Adafruit_Arcada_SPITFT::open(const char *path, uint32_t flags) {
     @return A File object, for whatever filesystem we're using
 */
 /**************************************************************************/
-File Adafruit_Arcada_SPITFT::openFileByIndex(const char *path, uint16_t index,
+File Adafruit_Arcada_SPITFT::openFileByIndex(const char* path, uint16_t index,
                                              uint32_t flags,
-                                             const char *extensionFilter) {
+                                             const char* extensionFilter) {
   (void)flags;
 
   if (!path) { // use CWD!
@@ -361,10 +362,10 @@ File Adafruit_Arcada_SPITFT::openFileByIndex(const char *path, uint16_t index,
     @return true on success, false on some sort of failure
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::chooseFile(const char *path,
-                                        char *selected_filename,
+bool Adafruit_Arcada_SPITFT::chooseFile(const char* path,
+                                        char* selected_filename,
                                         uint16_t selected_filename_maxlen,
-                                        const char *extensionFilter) {
+                                        const char* extensionFilter) {
   int8_t selected_line = 0;    // the line # that we have selected
   bool selected_isdir = false; // whether the current line is a directory
   int8_t selected_scroll_idx =
@@ -437,7 +438,7 @@ bool Adafruit_Arcada_SPITFT::chooseFile(const char *path,
           if (line == selected_line) {
             display->setTextColor(ARCADA_YELLOW, ARCADA_RED);
             int maxlen = selected_filename_maxlen - 1;
-            char *fn_ptr = selected_filename;
+            char* fn_ptr = selected_filename;
             strncpy(fn_ptr, curr_path, maxlen);
             maxlen -= strlen(curr_path);
             fn_ptr += strlen(fn_ptr);
@@ -492,7 +493,7 @@ bool Adafruit_Arcada_SPITFT::chooseFile(const char *path,
       }
 
       // Scroll the selected filename?
-      char *fn_ptr = selected_filename;
+      char* fn_ptr = selected_filename;
       fn_ptr = strrchr(selected_filename, '/');
       if (fn_ptr) {
         fn_ptr++;
@@ -559,7 +560,7 @@ bool Adafruit_Arcada_SPITFT::chooseFile(const char *path,
           }
           Serial.print("Chdir from ");
           Serial.print(curr_path);
-          char *last = strrchr(curr_path, '/');
+          char* last = strrchr(curr_path, '/');
           if (last) {
             last[1] = 0; // ok slice off at this point!
           }
@@ -575,8 +576,8 @@ bool Adafruit_Arcada_SPITFT::chooseFile(const char *path,
   return true;
 }
 
-static bool filenameValidityChecker(const char *filename,
-                                    const char *extensionFilter) {
+static bool filenameValidityChecker(const char* filename,
+                                    const char* extensionFilter) {
   if (strlen(filename) > 2) {
     if ((filename[0] == '.') && (filename[1] == '_')) {
       return false; // annoying macOS trashfiles
@@ -585,7 +586,7 @@ static bool filenameValidityChecker(const char *filename,
 
   // Check the last 3 (or 4?) characters to see if its the right filetype
   if (extensionFilter) {
-    const char *p = filename + strlen(filename) - strlen(extensionFilter);
+    const char* p = filename + strlen(filename) - strlen(extensionFilter);
     for (uint16_t i = 0; i < strlen(extensionFilter); i++) {
       if (toupper(p[i]) != toupper(extensionFilter[i])) {
         return false;

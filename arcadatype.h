@@ -2,7 +2,6 @@
 #ifndef ARCADATYPE
 #define ARCADATYPE
 
-#include "Adafruit_Arcada_Def.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_ImageReader.h> // Image-reading functions
 #include <Adafruit_NeoPixel.h>
@@ -10,6 +9,8 @@
 #include <Adafruit_WavePlayer.h>
 #include <SdFat_Adafruit_Fork.h>
 #include <TouchScreen.h>
+
+#include "Adafruit_Arcada_Def.h"
 
 #if defined(USE_TINYUSB)
 #include "Adafruit_TinyUSB.h"
@@ -40,9 +41,8 @@ typedef enum _FilesystemType {
 */
 /**************************************************************************/
 class Adafruit_Arcada_SPITFT {
-
-public:
-  Adafruit_SPITFT *display =
+ public:
+  Adafruit_SPITFT* display =
       0; ///< The Adafruit_GFX subclass display which the variant must create
 
   Adafruit_Arcada_SPITFT(void);
@@ -77,30 +77,30 @@ public:
 
   void timerStop(void);
 
-  void printf(const char *format, ...);
+  void printf(const char* format, ...);
 
   // Filesystem stuff!
   Arcada_FilesystemType filesysBegin(
       Arcada_FilesystemType desiredFilesys = ARCADA_FILESYS_SD_AND_QSPI);
-  int16_t filesysListFiles(const char *path = NULL,
-                           const char *extensionFilter = NULL);
-  bool chdir(const char *path);
-  File open(const char *path = NULL, uint32_t flags = O_READ);
-  File openFileByIndex(const char *path, uint16_t index,
+  int16_t filesysListFiles(const char* path = NULL,
+                           const char* extensionFilter = NULL);
+  bool chdir(const char* path);
+  File open(const char* path = NULL, uint32_t flags = O_READ);
+  File openFileByIndex(const char* path, uint16_t index,
                        uint32_t flags = O_READ,
-                       const char *extensionFilter = NULL);
+                       const char* extensionFilter = NULL);
 
-  bool exists(const char *path);
-  bool mkdir(const char *path);
-  bool remove(const char *path);
-  uint8_t *writeDataToFlash(uint8_t *data, uint32_t len);
-  uint8_t *writeFileToFlash(const char *filename);
+  bool exists(const char* path);
+  bool mkdir(const char* path);
+  bool remove(const char* path);
+  uint8_t* writeDataToFlash(uint8_t* data, uint32_t len);
+  uint8_t* writeFileToFlash(const char* filename);
   uint32_t availableFlash(void);
   bool filesysBeginMSD(
       Arcada_FilesystemType desiredFilesys = ARCADA_FILESYS_SD_AND_QSPI);
   bool recentUSB(uint32_t timeout = 100);
-  bool chooseFile(const char *path, char *filename, uint16_t filename_max,
-                  const char *extensionFilter = NULL);
+  bool chooseFile(const char* path, char* filename, uint16_t filename_max,
+                  const char* extensionFilter = NULL);
 
   bool hasControlPad(void);
   int16_t readJoystickX(uint8_t oversampling = 3);
@@ -130,18 +130,20 @@ public:
     @return The pointer to a width*height*16-bit GFXcanvas16 canvas.
   */
   /************************************************************************/
-  GFXcanvas16 *getCanvas(void) { return _canvas; }
+  GFXcanvas16* getCanvas(void) {
+    return _canvas;
+  }
   /************************************************************************/
   /*!
     @brief  Return address of internal framebuffer (NULL if not allocated)
     @return The pointer to a width*height*16-bit framebuf
   */
   /************************************************************************/
-  uint16_t *getFrameBuffer(void) {
+  uint16_t* getFrameBuffer(void) {
     return _canvas ? _canvas->getBuffer() : NULL;
   }
   bool blitFrameBuffer(uint16_t x, uint16_t y, bool blocking = false,
-                       bool bigEndian = false, Adafruit_SPITFT *display = NULL);
+                       bool bigEndian = false, Adafruit_SPITFT* display = NULL);
   uint16_t ColorHSV565(int16_t H, uint8_t S, uint8_t V);
 
   bool setBacklight(uint8_t brightness, bool saveToDisk = false);
@@ -151,23 +153,23 @@ public:
   void enableSpeaker(bool flag);
 
   // Alerts
-  void alertBox(const char *string, uint16_t boxColor, uint16_t textColor,
+  void alertBox(const char* string, uint16_t boxColor, uint16_t textColor,
                 uint32_t continueButtonMask);
-  void infoBox(const char *string,
+  void infoBox(const char* string,
                uint32_t continueButtonMask = ARCADA_BUTTONMASK_A);
-  void warnBox(const char *string,
+  void warnBox(const char* string,
                uint32_t continueButtonMask = ARCADA_BUTTONMASK_A);
-  void errorBox(const char *string,
+  void errorBox(const char* string,
                 uint32_t continueButtonMask = ARCADA_BUTTONMASK_A);
-  void haltBox(const char *string);
-  uint8_t menu(const char **menu_strings, uint8_t menu_num, uint16_t boxColor,
+  void haltBox(const char* string);
+  uint8_t menu(const char** menu_strings, uint8_t menu_num, uint16_t boxColor,
                uint16_t textColor, bool cancellable = false);
 
   // Configuration JSON files
   bool loadConfigurationFile(
-      const char *filename = ARCADA_DEFAULT_CONFIGURATION_FILENAME);
+      const char* filename = ARCADA_DEFAULT_CONFIGURATION_FILENAME);
   bool saveConfigurationFile(
-      const char *filename = ARCADA_DEFAULT_CONFIGURATION_FILENAME);
+      const char* filename = ARCADA_DEFAULT_CONFIGURATION_FILENAME);
 
   Adafruit_NeoPixel
       pixels; ///<  The neopixel strip, of length ARCADA_NEOPIXEL_NUM
@@ -179,7 +181,9 @@ public:
   */
   /**************************************************************************/
 
-  bool hasAccel(void) { return _has_accel; }
+  bool hasAccel(void) {
+    return _has_accel;
+  }
 
   /**************************************************************************/
   /*!
@@ -187,7 +191,9 @@ public:
     @return True if the ESP32 module was detected, false otherwise.
   */
   /**************************************************************************/
-  bool hasWiFi(void) { return _has_wifi; }
+  bool hasWiFi(void) {
+    return _has_wifi;
+  }
 
 #ifdef ARCADA_USE_JSON
   StaticJsonDocument<256>
@@ -195,19 +201,19 @@ public:
                   ///< restore/save this with (load/save)ConfigurationFile
 #endif
 
-  ImageReturnCode drawBMP(char *filename, int16_t x, int16_t y,
-                          Adafruit_SPITFT *tft = 0x0, boolean transact = true);
-  Adafruit_ImageReader *getImageReader(void);
+  ImageReturnCode drawBMP(char* filename, int16_t x, int16_t y,
+                          Adafruit_SPITFT* tft = 0x0, boolean transact = true);
+  Adafruit_ImageReader* getImageReader(void);
 
-  wavStatus WavLoad(char *filename, uint32_t *samplerate);
-  wavStatus WavLoad(File f, uint32_t *samplerate);
+  wavStatus WavLoad(char* filename, uint32_t* samplerate);
+  wavStatus WavLoad(File f, uint32_t* samplerate);
   wavStatus WavReadFile();
   wavStatus WavPlayNextSample(void);
   bool WavReadyForData();
-  wavStatus WavPlayComplete(char *filename);
+  wavStatus WavPlayComplete(char* filename);
   wavStatus WavPlayComplete(File f);
 
-protected:
+ protected:
   bool _has_accel =
       false; ///< Internally tracked variable if accelerometer was found
   bool _has_wifi =
@@ -218,7 +224,7 @@ protected:
       *SD_imagereader =
           0; ///< If initalized, the imagereader for the SD card filesystem
 
-private:
+ private:
   uint32_t last_buttons, ///< After readButtons() is called, this has the
                          ///< previous button states
       curr_buttons, ///< After readButtons() is called, this has the current
@@ -236,15 +242,15 @@ private:
   Arcada_FilesystemType _filesys_type = ARCADA_FILESYS_NONE;
   char _cwd_path[255];
 
-  GFXcanvas16 *_canvas = NULL;
+  GFXcanvas16* _canvas = NULL;
   bool _first_frame = true;
 
   uint8_t _volume = 255, _brightness = 255;
 
-  TouchScreen *_touchscreen;
+  TouchScreen* _touchscreen;
   int16_t _ts_xmin = 0, _ts_xmax = 1023, _ts_ymin = 0, _ts_ymax = 1023;
 
-  Adafruit_WavePlayer *player = NULL;
+  Adafruit_WavePlayer* player = NULL;
   File _wav_file;
   volatile bool _wav_readflag = true;
   volatile bool _wav_playing = false;

@@ -11,8 +11,8 @@ static Adafruit_USBD_MSC usb_msc;
 extern FatFileSystem Arcada_QSPI_FileSys;
 extern Adafruit_SPIFlash Arcada_QSPI_Flash;
 
-int32_t qspi_msc_write_cb(uint32_t lba, uint8_t *buffer, uint32_t bufsize);
-int32_t qspi_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize);
+int32_t qspi_msc_write_cb(uint32_t lba, uint8_t* buffer, uint32_t bufsize);
+int32_t qspi_msc_read_cb(uint32_t lba, void* buffer, uint32_t bufsize);
 void qspi_msc_flush_cb(void);
 
 #if defined(ENABLE_EXTENDED_TRANSFER_CLASS)
@@ -21,8 +21,8 @@ extern SdFatEX Arcada_SD_FileSys;
 extern SdFat Arcada_SD_FileSys;
 #endif
 
-int32_t sd_msc_write_cb(uint32_t lba, uint8_t *buffer, uint32_t bufsize);
-int32_t sd_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize);
+int32_t sd_msc_write_cb(uint32_t lba, uint8_t* buffer, uint32_t bufsize);
+int32_t sd_msc_read_cb(uint32_t lba, void* buffer, uint32_t bufsize);
 void sd_msc_flush_cb(void);
 
 /**************************************************************************/
@@ -143,14 +143,14 @@ bool Adafruit_Arcada_SPITFT::recentUSB(uint32_t timeout) {
 // Callback invoked when received READ10 command.
 // Copy disk's data to buffer (up to bufsize) and
 // return number of copied bytes (must be multiple of block size)
-int32_t qspi_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize) {
+int32_t qspi_msc_read_cb(uint32_t lba, void* buffer, uint32_t bufsize) {
 #ifdef ARCADA_MSD_DEBUG
   Serial.printf("QSPI Read block %08x\n", lba);
 #endif
   // Note: SPIFLash Bock API: readBlocks/writeBlocks/syncBlocks
   // already include 4K sector caching internally. We don't need to cache it,
   // yahhhh!!
-  return Arcada_QSPI_Flash.readBlocks(lba, (uint8_t *)buffer, bufsize / 512)
+  return Arcada_QSPI_Flash.readBlocks(lba, (uint8_t*)buffer, bufsize / 512)
              ? bufsize
              : -1;
 }
@@ -158,7 +158,7 @@ int32_t qspi_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize) {
 // Callback invoked when received WRITE10 command.
 // Process data in buffer to disk's storage and
 // return number of written bytes (must be multiple of block size)
-int32_t qspi_msc_write_cb(uint32_t lba, uint8_t *buffer, uint32_t bufsize) {
+int32_t qspi_msc_write_cb(uint32_t lba, uint8_t* buffer, uint32_t bufsize) {
 #ifdef ARCADA_MSD_DEBUG
   Serial.printf("QSPI Write block %08x\n", lba);
 #endif
@@ -188,12 +188,12 @@ void qspi_msc_flush_cb(void) {
 // Callback invoked when received READ10 command.
 // Copy disk's data to buffer (up to bufsize) and
 // return number of copied bytes (must be multiple of block size)
-int32_t sd_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize) {
+int32_t sd_msc_read_cb(uint32_t lba, void* buffer, uint32_t bufsize) {
 #ifdef ARCADA_MSD_DEBUG
   Serial.printf("SD Read block %08x\n", lba);
 #endif
 
-  return Arcada_SD_FileSys.card()->readBlocks(lba, (uint8_t *)buffer,
+  return Arcada_SD_FileSys.card()->readBlocks(lba, (uint8_t*)buffer,
                                               bufsize / 512)
              ? bufsize
              : -1;
@@ -202,7 +202,7 @@ int32_t sd_msc_read_cb(uint32_t lba, void *buffer, uint32_t bufsize) {
 // Callback invoked when received WRITE10 command.
 // Process data in buffer to disk's storage and
 // return number of written bytes (must be multiple of block size)
-int32_t sd_msc_write_cb(uint32_t lba, uint8_t *buffer, uint32_t bufsize) {
+int32_t sd_msc_write_cb(uint32_t lba, uint8_t* buffer, uint32_t bufsize) {
 #ifdef ARCADA_MSD_DEBUG
   Serial.printf("SD Write block %08x\n", lba);
 #endif

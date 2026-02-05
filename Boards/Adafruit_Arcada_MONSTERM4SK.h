@@ -1,8 +1,9 @@
 #if defined(ADAFRUIT_MONSTER_M4SK_EXPRESS)
 
-#include "Adafruit_seesaw.h"
 #include <Adafruit_LIS3DH.h>
 #include <Adafruit_ST7789.h>
+
+#include "Adafruit_seesaw.h"
 
 #define ARCADA_TFT_SPI SPI
 #define ARCADA_TFT_CS 5  // Display CS Arduino pin number
@@ -40,13 +41,13 @@
 #include "arcadatype.h"
 
 class Adafruit_Arcada : public Adafruit_Arcada_SPITFT {
-public:
-  Adafruit_LIS3DH *accel = NULL;
+ public:
+  Adafruit_LIS3DH* accel = NULL;
   Adafruit_seesaw ss;
   Adafruit_ST7789 *display2, *_display; // we need to keep a 'copy' of the
                                         // ST7789 version of both displays
 
-  Adafruit_Arcada(){};
+  Adafruit_Arcada() {};
 
   bool variantBegin(void) {
     pinMode(LED_BUILTIN, OUTPUT);
@@ -108,7 +109,9 @@ public:
     display = _display; // grab the SPITFT pointer for arcada parent
   }
 
-  uint16_t readLightSensor(void) { return ss.analogRead(SS_LIGHTSENSOR_PIN); }
+  uint16_t readLightSensor(void) {
+    return ss.analogRead(SS_LIGHTSENSOR_PIN);
+  }
 
   float readBatterySensor(void) {
     return ss.analogRead(SS_VCCSENSOR_PIN) * 2 * 3.3 / 1024;

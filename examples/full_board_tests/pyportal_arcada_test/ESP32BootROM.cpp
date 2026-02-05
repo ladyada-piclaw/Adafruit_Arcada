@@ -23,7 +23,7 @@
 
 // #define DEBUG 1
 
-ESP32BootROMClass::ESP32BootROMClass(HardwareSerial &serial, int gpio0Pin,
+ESP32BootROMClass::ESP32BootROMClass(HardwareSerial& serial, int gpio0Pin,
                                      int resetnPin)
     : _serial(&serial), _gpio0Pin(gpio0Pin), _resetnPin(resetnPin) {}
 
@@ -72,7 +72,9 @@ int ESP32BootROMClass::begin(unsigned long baudrate) {
   return 1;
 }
 
-void ESP32BootROMClass::end() { _serial->end(); }
+void ESP32BootROMClass::end() {
+  _serial->end();
+}
 
 int ESP32BootROMClass::sync() {
   const uint8_t data[] = {0x07, 0x07, 0x12, 0x20, 0x55, 0x55, 0x55, 0x55, 0x55,
@@ -119,7 +121,7 @@ int ESP32BootROMClass::beginFlash(uint32_t offset, uint32_t size,
   return (response(0x02, 120000) == 0);
 }
 
-int ESP32BootROMClass::dataFlash(const void *data, uint32_t length) {
+int ESP32BootROMClass::dataFlash(const void* data, uint32_t length) {
   uint32_t cmdData[4 + (_chunkSize / 4)];
 
   cmdData[0] = length;
@@ -147,7 +149,7 @@ int ESP32BootROMClass::endFlash(uint32_t reboot) {
 }
 
 int ESP32BootROMClass::md5Flash(uint32_t offset, uint32_t size,
-                                uint8_t *result) {
+                                uint8_t* result) {
   const uint32_t data[4] = {offset, size, 0, 0};
 
   command(0x13, data, sizeof(data));
@@ -170,23 +172,23 @@ int ESP32BootROMClass::md5Flash(uint32_t offset, uint32_t size,
   return 1;
 }
 
-void ESP32BootROMClass::command(int opcode, const void *data, uint16_t length) {
+void ESP32BootROMClass::command(int opcode, const void* data, uint16_t length) {
   uint32_t checksum = 0;
 
   if (opcode == 0x03) {
     checksum = 0xef; // seed
 
     for (uint16_t i = 16; i < length; i++) {
-      checksum ^= ((const uint8_t *)data)[i];
+      checksum ^= ((const uint8_t*)data)[i];
     }
   }
 
   _serial->write(0xc0);
   _serial->write((uint8_t)0x00); // direction
   _serial->write(opcode);
-  _serial->write((uint8_t *)&length, sizeof(length));
-  writeEscapedBytes((uint8_t *)&checksum, sizeof(checksum));
-  writeEscapedBytes((uint8_t *)data, length);
+  _serial->write((uint8_t*)&length, sizeof(length));
+  writeEscapedBytes((uint8_t*)&checksum, sizeof(checksum));
+  writeEscapedBytes((uint8_t*)data, length);
   _serial->write(0xc0);
 #ifdef ARDUINO_SAMD_MKRVIDOR4000
   // _serial->flush(); // doesn't work!
@@ -195,7 +197,7 @@ void ESP32BootROMClass::command(int opcode, const void *data, uint16_t length) {
 #endif
 }
 
-int ESP32BootROMClass::response(int opcode, unsigned long timeout, void *body) {
+int ESP32BootROMClass::response(int opcode, unsigned long timeout, void* body) {
   uint8_t data[10 + 256];
   uint16_t index = 0;
 
@@ -248,7 +250,7 @@ int ESP32BootROMClass::response(int opcode, unsigned long timeout, void *body) {
   return data[responseLength + 5];
 }
 
-void ESP32BootROMClass::writeEscapedBytes(const uint8_t *data,
+void ESP32BootROMClass::writeEscapedBytes(const uint8_t* data,
                                           uint16_t length) {
   uint16_t written = 0;
 

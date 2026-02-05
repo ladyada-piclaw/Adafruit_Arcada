@@ -26,8 +26,8 @@
     wave file samplerate into samplerate pointer
 */
 /**************************************************************************/
-wavStatus Adafruit_Arcada_SPITFT::WavLoad(char *filename,
-                                          uint32_t *samplerate) {
+wavStatus Adafruit_Arcada_SPITFT::WavLoad(char* filename,
+                                          uint32_t* samplerate) {
   Serial.printf("Trying: '%s'\n", filename);
   File wav_file = open(filename, FILE_READ);
   return WavLoad(wav_file, samplerate);
@@ -43,7 +43,7 @@ wavStatus Adafruit_Arcada_SPITFT::WavLoad(char *filename,
     wave file samplerate into samplerate pointer
 */
 /**************************************************************************/
-wavStatus Adafruit_Arcada_SPITFT::WavLoad(File f, uint32_t *samplerate) {
+wavStatus Adafruit_Arcada_SPITFT::WavLoad(File f, uint32_t* samplerate) {
   if (!f) {
     return WAV_ERR_NOFILE;
   }
@@ -96,7 +96,9 @@ wavStatus Adafruit_Arcada_SPITFT::WavReadFile() {
     @return True if there's free buffer space
 */
 /**************************************************************************/
-bool Adafruit_Arcada_SPITFT::WavReadyForData() { return _wav_readflag; }
+bool Adafruit_Arcada_SPITFT::WavReadyForData() {
+  return _wav_readflag;
+}
 
 /**************************************************************************/
 /*!
@@ -152,7 +154,7 @@ wavStatus Adafruit_Arcada_SPITFT::WavPlayNextSample(void) {
     @return Status enum from Adafruit WavePlayer library, WAV_OK on success
 */
 /**************************************************************************/
-wavStatus Adafruit_Arcada_SPITFT::WavPlayComplete(char *filename) {
+wavStatus Adafruit_Arcada_SPITFT::WavPlayComplete(char* filename) {
   File wav_file = open(filename, FILE_READ);
   return WavPlayComplete(wav_file);
 }
