@@ -24,10 +24,12 @@
 #include "arcadatype.h"
 
 class Adafruit_Arcada : public Adafruit_Arcada_SPITFT {
-public:
-  Adafruit_CPlay_LIS3DH *accel = NULL;
+ public:
+  Adafruit_CPlay_LIS3DH* accel = NULL;
 
-  Adafruit_Arcada(void) { _has_accel = true; };
+  Adafruit_Arcada(void) {
+    _has_accel = true;
+  };
 
   bool variantBegin(void) {
     CircuitPlayground.begin();
@@ -42,7 +44,7 @@ public:
   }
 
   void displayBegin(void) {
-    Adafruit_ST7789 *tft = new Adafruit_ST7789(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
+    Adafruit_ST7789* tft = new Adafruit_ST7789(&ARCADA_TFT_SPI, ARCADA_TFT_CS,
                                                ARCADA_TFT_DC, ARCADA_TFT_RST);
     tft->init(240, 240);
     tft->setRotation(ARCADA_TFT_ROTATION);
@@ -65,7 +67,7 @@ public:
     return buttons;
   }
 
-private:
+ private:
 };
 
 #endif

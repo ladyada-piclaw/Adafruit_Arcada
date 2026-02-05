@@ -21,7 +21,7 @@ void start_level() {
   screen_mid_y = arcada.display->height() / 2;
   largecircle_r = min(screen_mid_x, screen_mid_y) - 1;
 
-  GFXcanvas16 *canvas = arcada.getCanvas();
+  GFXcanvas16* canvas = arcada.getCanvas();
   canvas->fillScreen(ARCADA_BLACK);
 
   bubble_x = screen_mid_x;
@@ -41,7 +41,7 @@ void draw_level() {
   Serial.println(" m/s^2 ");
 */
 
-  GFXcanvas16 *canvas = arcada.getCanvas();
+  GFXcanvas16* canvas = arcada.getCanvas();
   // erase old bubble
   canvas->fillCircle(bubble_x, bubble_y, BUBBLE_R, ARCADA_BLACK);
 

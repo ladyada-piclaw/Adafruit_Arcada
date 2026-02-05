@@ -43,15 +43,19 @@
 #include "arcadatype.h"
 
 class Adafruit_Arcada : public Adafruit_Arcada_SPITFT {
-public:
-  Adafruit_Arcada(void){};
+ public:
+  Adafruit_Arcada(void) {};
 
-  bool variantBegin(void) { return true; }
+  bool variantBegin(void) {
+    return true;
+  }
 
-  uint32_t variantReadButtons(void) { return 0; }
+  uint32_t variantReadButtons(void) {
+    return 0;
+  }
 
   void displayBegin(void) {
-    Adafruit_HX8357 *tft = new Adafruit_HX8357(
+    Adafruit_HX8357* tft = new Adafruit_HX8357(
         tft8bitbus, ARCADA_TFT_D0, ARCADA_TFT_WR, ARCADA_TFT_DC, ARCADA_TFT_CS,
         ARCADA_TFT_RST, ARCADA_TFT_RD);
     tft->begin();

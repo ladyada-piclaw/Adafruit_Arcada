@@ -23,7 +23,7 @@ void Adafruit_Arcada_SPITFT::_initAlertFonts(void) {
     immediate return. Default is ARCADA_BUTTONMASK_A
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::infoBox(const char *string,
+void Adafruit_Arcada_SPITFT::infoBox(const char* string,
                                      uint32_t continueButtonMask) {
   alertBox(string, ARCADA_WHITE, ARCADA_BLACK, continueButtonMask);
 }
@@ -36,7 +36,7 @@ void Adafruit_Arcada_SPITFT::infoBox(const char *string,
     immediate return. Default is ARCADA_BUTTONMASK_A
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::warnBox(const char *string,
+void Adafruit_Arcada_SPITFT::warnBox(const char* string,
                                      uint32_t continueButtonMask) {
   alertBox(string, ARCADA_YELLOW, ARCADA_WHITE, continueButtonMask);
 }
@@ -49,7 +49,7 @@ void Adafruit_Arcada_SPITFT::warnBox(const char *string,
     immediate return. Default is ARCADA_BUTTONMASK_A
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::errorBox(const char *string,
+void Adafruit_Arcada_SPITFT::errorBox(const char* string,
                                       uint32_t continueButtonMask) {
   alertBox(string, ARCADA_RED, ARCADA_WHITE, continueButtonMask);
 }
@@ -60,7 +60,7 @@ void Adafruit_Arcada_SPITFT::errorBox(const char *string,
     @param  string The message to display
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::haltBox(const char *string) {
+void Adafruit_Arcada_SPITFT::haltBox(const char* string) {
   alertBox(string, ARCADA_RED, ARCADA_WHITE, 0);
   while (1) {
     delay(10);
@@ -77,7 +77,7 @@ void Adafruit_Arcada_SPITFT::haltBox(const char *string) {
     immediate return.
 */
 /**************************************************************************/
-void Adafruit_Arcada_SPITFT::alertBox(const char *string, uint16_t boxColor,
+void Adafruit_Arcada_SPITFT::alertBox(const char* string, uint16_t boxColor,
                                       uint16_t textColor,
                                       uint32_t continueButtonMask) {
   _initAlertFonts();
@@ -89,7 +89,7 @@ void Adafruit_Arcada_SPITFT::alertBox(const char *string, uint16_t boxColor,
   uint8_t lines = 1;
   uint16_t fontX = boxX + charWidth;
   for (uint16_t c = 0; c < strlen(string); c++) {
-    const char *nextBreakStr = strpbrk(string + c, " \n");
+    const char* nextBreakStr = strpbrk(string + c, " \n");
     if (!nextBreakStr) {
       nextBreakStr = string + strlen(string);
     }
@@ -116,7 +116,7 @@ void Adafruit_Arcada_SPITFT::alertBox(const char *string, uint16_t boxColor,
   display->setTextColor(ARCADA_BLACK);
 
   for (uint16_t c = 0; c < strlen(string); c++) {
-    const char *nextBreakStr = strpbrk(string + c, " \n");
+    const char* nextBreakStr = strpbrk(string + c, " \n");
     if (!nextBreakStr) {
       nextBreakStr = string + strlen(string);
     }
@@ -138,7 +138,7 @@ void Adafruit_Arcada_SPITFT::alertBox(const char *string, uint16_t boxColor,
   }
 
   if (continueButtonMask) {
-    const char *buttonString = "";
+    const char* buttonString = "";
     if (hasTouchscreen() && !hasControlPad()) {
       buttonString = "TAP";
     } else {
@@ -197,7 +197,7 @@ void Adafruit_Arcada_SPITFT::alertBox(const char *string, uint16_t boxColor,
    canceled
 */
 /**************************************************************************/
-uint8_t Adafruit_Arcada_SPITFT::menu(const char **menu_strings,
+uint8_t Adafruit_Arcada_SPITFT::menu(const char** menu_strings,
                                      uint8_t menu_num, uint16_t boxColor,
                                      uint16_t textColor, bool cancellable) {
   _initAlertFonts();
@@ -220,7 +220,7 @@ uint8_t Adafruit_Arcada_SPITFT::menu(const char **menu_strings,
   display->drawRoundRect(boxX, boxY, boxWidth, boxHeight, charWidth, textColor);
 
   // Print the selection hint
-  const char *buttonString = "A";
+  const char* buttonString = "A";
   uint16_t fontX =
       boxX + boxWidth - (strlen(buttonString) + 1) * charWidth + 2 * fontSize;
   uint16_t fontY = boxY + boxHeight - charHeight;
