@@ -3,27 +3,29 @@
 
 #include <Adafruit_Arcada.h>
 
-
-Adafruit_Arcada    arcada;
-const char         *wavPath  = "/wavs";
-volatile bool      playing = false;
+Adafruit_Arcada arcada;
+const char* wavPath = "/wavs";
+volatile bool playing = false;
 
 // Crude error handler. Prints message to Serial Monitor, blinks LED.
-void fatal(const char *message, uint16_t blinkDelay) {
+void fatal(const char* message, uint16_t blinkDelay) {
   Serial.begin(9600);
   Serial.println(message);
-  for(bool ledState = HIGH;; ledState = !ledState) {
+  for (bool ledState = HIGH;; ledState = !ledState) {
     digitalWrite(LED_BUILTIN, ledState);
     delay(blinkDelay);
   }
 }
 
 void setup(void) {
-  if(!arcada.arcadaBegin())     fatal("Arcada init fail!", 100);
-  if(!arcada.filesysBeginMSD()) fatal("No filesystem found!", 250);
+  if (!arcada.arcadaBegin())
+    fatal("Arcada init fail!", 100);
+  if (!arcada.filesysBeginMSD())
+    fatal("No filesystem found!", 250);
 
   Serial.begin(9600);
-  while(!Serial) yield();
+  while (!Serial)
+    yield();
   delay(100);
   Serial.print("Arcada wave player demo. Place wav's in ");
   Serial.print(wavPath);
@@ -42,7 +44,7 @@ void loop(void) {
 
   // find the next wav file
   File file = arcada.openFileByIndex(wavPath, file_index, O_READ, "wav");
-  if (! file) {
+  if (!file) {
     // wrap around to beginning of directory
     file_index = 0;
     Serial.println("--------------------------------------------------");
@@ -53,10 +55,12 @@ void loop(void) {
   status = arcada.WavLoad(file, &sampleRate);
   if ((status == WAV_LOAD) || (status == WAV_EOF)) {
     Serial.println("Loaded!");
-    arcada.enableSpeaker(true);  // enable speaker output
-    arcada.timerCallback(sampleRate, wavOutCallback); // setup the callback to play audio
+    arcada.enableSpeaker(true); // enable speaker output
+    arcada.timerCallback(sampleRate,
+                         wavOutCallback); // setup the callback to play audio
   } else {
-    Serial.print("WAV error: "); Serial.println(status);
+    Serial.print("WAV error: ");
+    Serial.println(status);
   }
 
   do { // Repeat this loop until WAV_EOF or WAV_ERR_*
@@ -66,10 +70,12 @@ void loop(void) {
     }
     yield();
   } while ((status == WAV_OK) || (status == WAV_LOAD));
-  Serial.print("WAV end: "); Serial.println(status);
- 
+  Serial.print("WAV end: ");
+  Serial.println(status);
+
   // Audio might be continuing to play at this point!
-  while (playing)   yield();
+  while (playing)
+    yield();
   // now we're really done
   file.close();
   file_index++;

@@ -10,23 +10,23 @@
 Adafruit_Arcada arcada;
 
 #if !defined(USE_TINYUSB)
-  #warning "Compile with TinyUSB selected!"
+#warning "Compile with TinyUSB selected!"
 #endif
 
-void setup()
-{
+void setup() {
   if (!arcada.arcadaBegin()) {
-    while (1);
+    while (1)
+      ;
   }
   arcada.filesysBeginMSD();
 
   Serial.begin(115200);
-  while ( !Serial ) delay(10);   // wait for native usb
+  while (!Serial)
+    delay(10); // wait for native usb
 
   Serial.println("Adafruit TinyUSB Mass Storage example");
 }
 
-void loop()
-{
+void loop() {
   // nothing to do
 }
