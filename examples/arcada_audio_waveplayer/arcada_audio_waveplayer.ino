@@ -5,11 +5,11 @@ Adafruit_Arcada arcada;
 #include <Audio.h>
 #include <play_fs_wav.h>
 
-AudioPlayFSWav           playWav1;
+AudioPlayFSWav playWav1;
 
-AudioOutputAnalogStereo  audioOutput;    // Dual DACs
-AudioConnection          patchCord1(playWav1, 0, audioOutput, 1);
-AudioConnection          patchCord2(playWav1, 1, audioOutput, 0);
+AudioOutputAnalogStereo audioOutput; // Dual DACs
+AudioConnection patchCord1(playWav1, 0, audioOutput, 1);
+AudioConnection patchCord2(playWav1, 1, audioOutput, 0);
 
 void setup() {
   // Audio connections require memory to work.  For more
@@ -19,7 +19,8 @@ void setup() {
   // Start arcada!
   if (!arcada.arcadaBegin()) {
     Serial.println("Couldn't start Arcada");
-    while(1) yield();
+    while (1)
+      yield();
   }
 
   // If we are using TinyUSB & QSPI we will have the filesystem show up!
@@ -27,9 +28,10 @@ void setup() {
   arcada.displayBegin();
   arcada.display->fillScreen(ARCADA_BLUE);
   arcada.setBacklight(255);
-  
+
   Serial.begin(115200);
-  while (!Serial) delay(10);
+  while (!Serial)
+    delay(10);
   delay(100);
 
   arcada.display->fillScreen(ARCADA_BLACK);
@@ -38,9 +40,10 @@ void setup() {
   if (arcada.filesysBegin()) {
     Serial.println("Found filesystem!");
   } else {
-    arcada.haltBox("No filesystem found! For QSPI flash, load CircuitPython. For SD cards, format with FAT");
+    arcada.haltBox("No filesystem found! For QSPI flash, load CircuitPython. "
+                   "For SD cards, format with FAT");
   }
-  
+
   Serial.println("WAV Files available:");
   Serial.println("---------------------------------");
   arcada.filesysListFiles("/", "wav");
@@ -51,18 +54,18 @@ void setup() {
   playFile("StreetChicken44.wav");
 }
 
-void playFile(const char *filename)
-{
-  Serial.print("Playing file: "); Serial.println(filename);
+void playFile(const char *filename) {
+  Serial.print("Playing file: ");
+  Serial.println(filename);
 
   File f = arcada.open(filename);
-  if (! f) {
+  if (!f) {
     Serial.println("Failed to open file");
     return;
   }
   // Start playing the file.  This sketch continues to
   // run while the file plays.
-  if (!playWav1.play(f)) { 
+  if (!playWav1.play(f)) {
     Serial.println("Failed to play");
     return;
   }
@@ -77,7 +80,6 @@ void playFile(const char *filename)
   }
   f.close();
 }
-
 
 void loop() {
   playFile("SDTEST1.WAV");

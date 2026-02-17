@@ -8,12 +8,13 @@ void setup(void) {
   // Start TFT and fill black
   if (!arcada.arcadaBegin()) {
     Serial.print("Failed to begin");
-    while (1) delay(10);
+    while (1)
+      delay(10);
   }
   arcada.displayBegin();
-  
+
   // Turn on backlight
-  arcada.setBacklight(255); 
+  arcada.setBacklight(255);
 }
 
 void loop() {
